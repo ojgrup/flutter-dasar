@@ -5,8 +5,10 @@ name: Build Flutter Dasar (Android Release)
 # Workflow akan dijalankan saat push ke branch 'main' atau saat manual trigger
 on:
   push:
+    # PERBAIKAN: Mengubah branch pemicu dari 'master' menjadi 'main'.
+    # Mayoritas repositori baru menggunakan 'main'. Sesuaikan ini jika Anda benar-benar menggunakan 'master'.
     branches:
-      - master
+      - main 
   workflow_dispatch: # Untuk menjalankan build secara manual dari GitHub UI
 
 jobs:
@@ -32,16 +34,15 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          # Pastikan versi Flutter ini sesuai dengan yang Anda gunakan
-          flutter-version: '3.19.0' 
-          channel: 'stable'
+          # Opsional: Jika Anda ingin selalu menggunakan versi stabil terbaru yang tersedia di CI
+          # Anda bisa menghapus 'flutter-version' dan hanya menggunakan channel 'stable'.
+          channel: 'stable' 
       
       # 4. Ambil semua dependensi dari pubspec.yaml
       - name: Get Dependencies
         run: flutter pub get
 
       # 5. Buat Build APK (Release)
-      # Ini akan menghasilkan file APK yang siap untuk didistribusikan
       - name: Build Android Release APK
         run: flutter build apk --release
 
